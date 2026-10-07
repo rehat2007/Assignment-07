@@ -1,9 +1,17 @@
-import Image from "next/image";
+import Categorie from "@/components/Categorie";
+import Marquee from "@/components/Marquee";
+import { getCategories , getProducts} from "@/lib/api";
 
-export default function Home() {
+const Home = async () => {
+  const categories = await getCategories()
+  const products = await getProducts()
+
   return (
-    <div>
-         <h1>Hello World!</h1>
-    </div>
-  );
+    <>
+      <Categorie categorie={categories} />
+      <Marquee product={products}/>
+    </>
+  )
 }
+
+export default Home
