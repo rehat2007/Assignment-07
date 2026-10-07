@@ -5,7 +5,7 @@ const Navbar = () => {
     const date = new Date().toLocaleDateString("bn-BD", { dateStyle: "full" });
     return (
         <nav className="border-b border-gray-200 bg-white">
-            <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 py-10 sm:px-6 lg:px-8">
+            <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 py-10 sm:px-6 lg:px-2">
 
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-3">

@@ -1,8 +1,10 @@
+import Banner from "@/components/Hero"
+
 const Home =  () => {
 
   return (
     <>
-
+       <Banner/>
     </>
   )
 }
