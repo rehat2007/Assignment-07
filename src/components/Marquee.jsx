@@ -1,3 +1,4 @@
+import convertToBanglaNumber from "@/utils/ConvertToBanglaNumber";
 import MarqueeText from "react-marquee-text"
 import "react-marquee-text/dist/styles.css"
 
@@ -13,18 +14,21 @@ const Marquee = ({ product }) => {
                     return (
                         <div
                             key={item.id}
-                            className="flex items-center gap-4 border-r border-gray-300 px-4 py-2 text-[11px]"
+                            className="flex items-center gap-2 border-r border-gray-300 px-4 py-2 text-[11px]"
                         >
+                            <span >
+                                {item.categoryIcon}
+                            </span>
                             <span className="text-gray-700">
                                 {item.nameBn}
                             </span>
 
                             <span className="font-medium text-gray-700">
-                                {`${item.today} টাকা/কেজি`}
+                                {`${convertToBanglaNumber(item.today)} টাকা/কেজি`}
                             </span>
 
                             <span className={ item.change.dir === "down"  ? "text-red-500" : "text-green-500"}>
-                                {`▲ ${item.change.pct}`}
+                                {`▲ ${convertToBanglaNumber(item.change.pct)}`}
                             </span>
                         </div>
                     );

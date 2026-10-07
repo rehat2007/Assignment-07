@@ -1,15 +1,8 @@
-import Categorie from "@/components/Categorie";
-import Marquee from "@/components/Marquee";
-import { getCategories , getProducts} from "@/lib/api";
-
-const Home = async () => {
-  const categories = await getCategories()
-  const products = await getProducts()
+const Home =  () => {
 
   return (
     <>
-      <Categorie categorie={categories} />
-      <Marquee product={products}/>
+
     </>
   )
 }
