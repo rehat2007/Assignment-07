@@ -9,7 +9,7 @@ const Navbar = () => {
 
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-600 text-white">
+                    <div className="flex h-15 w-15 items-center justify-center rounded-xl bg-green-600 text-white lg:h-10 lg:w-10">
                         <Image
                             src="/logo-icon.png"
                             width={500}
@@ -19,7 +19,7 @@ const Navbar = () => {
                         />
                     </div>
 
-                    <div className="leading-tight">
+                    <div className="leading-loose lg:leading-tight">
                         <h1 className="text-lg font-bold text-gray-900">
                             বাজার দর
                         </h1>
@@ -30,7 +30,7 @@ const Navbar = () => {
                 </Link>
 
                 {/* Navigation */}
-                <div className="flex items-center gap-3 sm:gap-6">
+                <div className="flex flex-col items-center gap-1 md:flex-row md:gap-3 lg:flex-row lg:gap-5">
                     <Link
                         href="/login"
                         className="text-sm font-medium text-gray-700 transition hover:text-green-600"

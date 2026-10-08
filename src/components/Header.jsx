@@ -9,11 +9,11 @@ const Header = async () => {
     const categories = await getCategories()
     const products = await getProducts()
     return (
-        <>
+        <div className="sticky top-0  z-50 bg-white">
             <Navbar />
             <Categorie categorie={categories} />
             <Marquee product={products} />
-        </>
+        </div>
     )
 }
 

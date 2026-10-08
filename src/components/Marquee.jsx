@@ -28,7 +28,7 @@ const Marquee = ({ product }) => {
                             </span>
 
                             <span className={ item.change.dir === "down"  ? "text-red-500" : "text-green-500"}>
-                                {`▲ ${convertToBanglaNumber(item.change.pct)}%`}
+                             {`${item.change.dir === "down"  ?" ▲ ":" ▼ "} ${convertToBanglaNumber(item.change.pct)}%`}
                             </span>
                         </div>
                     );
