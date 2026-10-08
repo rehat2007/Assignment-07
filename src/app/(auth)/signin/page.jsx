@@ -189,7 +189,7 @@ export default function LoginPage() {
                     <p className="mt-5 text-center text-xs text-[#727b75]">
                         অ্যাকাউন্ট নেই?{" "}
                         <Link
-                            href="/register"
+                            href="/signup"
                             className="font-medium text-[#07883f] transition hover:text-[#056d32] hover:underline"
                         >
                             সাইন আপ করুন
@@ -198,10 +198,7 @@ export default function LoginPage() {
                 </div>
 
                 {/* Back */}
-                <Link
-                    href="/"
-                    className="mt-5 text-xs text-[#8a928c] transition hover:text-[#07883f]"
-                >
+                <Link href={'/'} className="mt-5 text-xs text-[#929a95] hover:text-green-600">
                     ← হোম পেজে ফিরে যান
                 </Link>
             </div>

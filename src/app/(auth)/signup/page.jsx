@@ -5,21 +5,19 @@ import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
-export default function RegisterPage() {
+const RegisterPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const router = useRouter();
 
     const handleRegister = async (e) => {
         e.preventDefault();
-
         setLoading(true);
         setError("");
 
-        // const form = e.currentTarget;
-
         const formData = new FormData(e.currentTarget);
-        const data = Object.fromEntries(formData.entries())
+        const data = Object.fromEntries(formData.entries());
+
         console.log(data);
 
         if (data.password !== data.confirmPassword) {
@@ -29,14 +27,18 @@ export default function RegisterPage() {
         }
 
         try {
-            const { data : signUpData, error } = await authClient.signUp.email({
-                name : data.name,
-                email: data.email,
-                password: data.password,
-            });
+            const { data: signUpData, error } =
+                await authClient.signUp.email({
+                    name: data.name,
+                    email: data.email,
+                    password: data.password,
+                    image: data.image,
+                });
 
             if (error) {
-                setError(error.message || "অ্যাকাউন্ট তৈরি করা যায়নি");
+                setError(
+                    error.message || "অ্যাকাউন্ট তৈরি করা যায়নি"
+                );
                 console.log(error.message);
                 return;
             }
@@ -103,6 +105,24 @@ export default function RegisterPage() {
                                 type="email"
                                 placeholder="you@example.com"
                                 required
+                                className="h-11 w-full rounded-md border border-[#dce5de] px-3 text-sm text-black outline-none transition placeholder:text-[#9aa39d] focus:border-[#079447] focus:ring-2 focus:ring-[#079447]/10"
+                            />
+                        </div>
+
+                        {/* Image URL */}
+                        <div>
+                            <label
+                                htmlFor="image"
+                                className="mb-1.5 block text-sm font-medium text-[#37423b]"
+                            >
+                                প্রোফাইল ছবির URL
+                            </label>
+
+                            <input
+                                id="image"
+                                name="image"
+                                type="url"
+                                placeholder="https://example.com/profile.jpg"
                                 className="h-11 w-full rounded-md border border-[#dce5de] px-3 text-sm text-black outline-none transition placeholder:text-[#9aa39d] focus:border-[#079447] focus:ring-2 focus:ring-[#079447]/10"
                             />
                         </div>
@@ -179,7 +199,6 @@ export default function RegisterPage() {
 
                     {/* Social Login */}
                     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-
                         <button
                             type="button"
                             onClick={() => handleSocialLogin("google")}
@@ -205,14 +224,14 @@ export default function RegisterPage() {
 
                             GitHub দিয়ে চালিয়ে যান
                         </button>
-
                     </div>
 
                     {/* Login */}
                     <p className="mt-4 text-center text-xs text-[#7a847d]">
                         অ্যাকাউন্ট আছে?{" "}
+
                         <Link
-                            href="/login"
+                            href="/signin"
                             className="font-medium text-[#079447] hover:underline"
                         >
                             সাইন ইন করুন
@@ -221,10 +240,13 @@ export default function RegisterPage() {
                 </div>
 
                 {/* Bottom Text */}
-                <p className="mt-5 text-xs text-[#929a95]">
-                    — নিরাপদ ও সহজে ব্যবহার করুন
-                </p>
+                <Link href={'/'} className="mt-5 text-xs text-[#929a95] hover:text-green-600">
+                    ← হোম পেজে ফিরে যান
+                </Link>
             </div>
         </main>
     );
-}
+};
+
+export default RegisterPage;
+

@@ -11,14 +11,9 @@ const Navbar = () => {
 
     const { data: session, isPending } = authClient.useSession();
 
-    const handleSignOut = async () => {
-        await authClient.signOut();
-    };
-
     return (
         <nav className="border-b border-gray-200 bg-white">
             <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 py-10 sm:px-6 lg:px-2">
-
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-3">
                     <div className="flex h-15 w-15 items-center justify-center rounded-xl bg-green-600 text-white lg:h-10 lg:w-10">
@@ -44,27 +39,23 @@ const Navbar = () => {
 
                 {/* Navigation */}
                 <div className="flex flex-col items-center gap-1 md:flex-row md:gap-3 lg:gap-5">
-
                     {isPending ? (
                         <div className="text-sm text-gray-500">
                             Loading...
                         </div>
-                    ) : session ? (
-                        <>
-                            <Link
-                                href="/profile"
-                                className="text-sm font-medium text-gray-700 transition hover:text-green-600"
-                            >
-                                প্রোফাইল আপডেট
-                            </Link>
-
-                            <button
-                                onClick={handleSignOut}
-                                className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-red-700"
-                            >
-                                সাইন আউট
-                            </button>
-                        </>
+                    ) : session ? ( 
+                        <Link
+                            href="/profile"
+                            className="rounded-full border-2 border-green-600 p-0.5 transition hover:border-green-700 hover:scale-105"
+                        >
+                            <Image
+                                src={session.user.image || "/default-avatar.png"}
+                                width={40}
+                                height={40}
+                                alt={session.user.name || "User profile"}
+                                className="h-9 w-9 rounded-full object-cover"
+                            />
+                        </Link>
                     ) : (
                         <>
                             <Link
@@ -89,4 +80,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
 
