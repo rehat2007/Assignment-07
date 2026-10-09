@@ -34,7 +34,7 @@ const getProducts = async () => {
 
 // Get products by category
 const getProductsByCategory = async (category) => {
-    const response = await fetch("https://api.abcz.workers.dev/api/bazardor/products?category=chal");
+    const response = await fetch(`https://api.abcz.workers.dev/api/bazardor/products?category=${category}`);
 
     if (!response.ok) {
         throw new Error("Failed to fetch products by category");
@@ -45,7 +45,7 @@ const getProductsByCategory = async (category) => {
 
 // Get a single product by ID
 const getProductById = async (id) => {
-    const response = await fetch("https://api.abcz.workers.dev/api/bazardor/products/1");
+    const response = await fetch(`https://api.abcz.workers.dev/api/bazardor/products/${id}`);
 
     if (!response.ok) {
         throw new Error("Failed to fetch product");
