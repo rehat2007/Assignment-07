@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 
 const Navbar = () => {
@@ -11,6 +12,17 @@ const Navbar = () => {
     });
 
     const { data: session, isPending } = authClient.useSession();
+    const router = useRouter();
+
+    const handleSignOut = async () => {
+        await authClient.signOut({
+            fetchOptions: {
+                onSuccess: () => {
+                    router.push("/signin");
+                },
+            },
+        });
+    };
 
     return (
         <nav className="border-b border-gray-200 bg-white">
@@ -44,19 +56,47 @@ const Navbar = () => {
                         <div className="text-sm text-gray-500">
                             Loading...
                         </div>
-                    ) : session ? ( 
-                        <Link
-                            href="/profile"
-                            className="rounded-full border-2 border-green-600 p-0.5 transition hover:border-green-700 hover:scale-105"
-                        >
-                            <Image
-                                src={session.user.image || "/default-avatar.png"}
-                                width={40}
-                                height={40}
-                                alt={session.user.name || "User profile"}
-                                className="h-9 w-9 rounded-full object-cover"
-                            />
-                        </Link>
+                    ) : session ? (
+                        <div className="relative group">
+                            {/* Profile Avatar */}
+                            <Link
+                                href="/profile"
+                                className="block rounded-full border-2 border-green-600 p-0.5
+               transition hover:border-green-700 hover:scale-105"
+                            >
+                                <Image
+                                    src={session.user.image || "/default-avatar.png"}
+                                    width={40}
+                                    height={40}
+                                    alt={session.user.name || "User profile"}
+                                    className="h-9 w-9 rounded-full object-cover"
+                                />
+                            </Link>
+
+                            {/* Dropdown Menu */}
+                            <div
+                                className="absolute right-0 top-full z-50 w-48 pt-2
+               invisible opacity-0 translate-y-2
+               transition-all duration-200
+               group-hover:visible group-hover:opacity-100
+               group-hover:translate-y-0"
+                            >
+                                <div className="rounded-lg border border-gray-200
+                    bg-white p-2 text-gray-800 shadow-lg">
+
+                                    <Link
+                                        href="/profile"
+                                        className="block rounded-md px-4 py-2 hover:bg-gray-100"
+                                    >
+                                        আমার প্রোফাইল
+                                    </Link>
+                                    <button onClick={handleSignOut} className="w-full rounded-md px-4 py-2 text-left border border-[#ff3b30] text-[#ef3027] hover:bg-[#fff1f0]">
+                                        সাইন আউট
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
                     ) : (
                         <>
                             <Link
