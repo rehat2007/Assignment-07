@@ -1,7 +1,7 @@
 import { createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://assignment-07-onml-git-main-my-team-fc5e.vercel.app/",
 });
 
 export const { signIn, signUp, useSession } = authClient;
