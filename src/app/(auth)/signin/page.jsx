@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { toast } from "sonner";
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 
@@ -25,17 +26,18 @@ export default function LoginPage() {
             const { data, error } = await authClient.signIn.email({
                 email: email,
                 password: password,
-                callbackURL: "/",
+                callbackURL: "/?auth=login",
             });
 
             if (error) {
-                setError(error.message || "ইমেইল অথবা পাসওয়ার্ড সঠিক নয়।");
+                toast.error("ইমেইল অথবা পাসওয়ার্ড সঠিক নয়।");
                 return;
             }
 
             console.log("Login successful:", data);
+
         } catch (err) {
-            setError("লগইন করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+            toast.error("লগইন করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
         } finally {
             setLoading(false);
         }
@@ -49,7 +51,7 @@ export default function LoginPage() {
         try {
             await authClient.signIn.social({
                 provider: "google",
-                callbackURL: "/",
+                callbackURL: "/?auth=login",
             });
         } catch (err) {
             setError("Google দিয়ে লগইন করতে সমস্যা হয়েছে।");
@@ -65,7 +67,7 @@ export default function LoginPage() {
         try {
             await authClient.signIn.social({
                 provider: "github",
-                callbackURL: "/",
+                callbackURL: "/?auth=login",
             });
         } catch (err) {
             setError("GitHub দিয়ে লগইন করতে সমস্যা হয়েছে।");

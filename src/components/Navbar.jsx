@@ -4,6 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
 
 const Navbar = () => {
@@ -18,6 +21,7 @@ const Navbar = () => {
         await authClient.signOut({
             fetchOptions: {
                 onSuccess: () => {
+                    toast.success("সাইন আউট সম্পন্ন হয়েছে।");
                     router.push("/signin");
                 },
             },

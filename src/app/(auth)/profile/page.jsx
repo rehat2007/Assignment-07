@@ -3,11 +3,14 @@
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function ProfilePage() {
 
     const { data: session, isPending } = authClient.useSession();
+    const [name, setName] = useState("");
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -32,6 +35,36 @@ export default function ProfilePage() {
                 },
             },
         });
+    };
+
+    const handleUpdateName = async (e) => {
+        e.preventDefault();
+
+        if (!name.trim()) {
+            toast.error("নাম লিখুন।");
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const { error } = await authClient.updateUser({
+                name: name.trim(),
+            });
+
+            if (error) {
+                toast.error("নাম আপডেট করা যায়নি।");
+                return;
+            }
+
+            toast.success("নাম সফলভাবে আপডেট হয়েছে।");
+            setName("");
+
+        } catch (err) {
+            toast.error("কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -85,34 +118,31 @@ export default function ProfilePage() {
                 </section>
 
                 {/* Information Card */}
+
                 <section className="mt-6 rounded-2xl border border-[#dce4dc] bg-[#fbfdfb] p-5 shadow-sm sm:p-6">
                     <h2 className="mb-8 text-lg font-semibold text-[#202620]">
                         তথ্য
                     </h2>
 
-                    <form className="space-y-4">
-                        <div>
-                            <label
-                                htmlFor="name"
-                                className="mb-2 block text-sm font-medium text-[#3f4740]"
-                            >
-                                নাম
-                            </label>
+                    <form onSubmit={handleUpdateName} className="space-y-3 px-1 sm:px-4">
+                        <p className="text-sm font-medium text-[#202620]">
+                            নাম
+                        </p>
 
-                            <input
-                                id="name"
-                                name="name"
-                                type="text"
-                                defaultValue=""
-                                className="h-10 w-full rounded-lg border border-[#dce4dc] bg-[#fbfdfb] px-3 text-sm text-[#202620] outline-none transition placeholder:text-[#9ca59d] focus:border-[#079447] focus:ring-2 focus:ring-[#079447]/10"
-                            />
-                        </div>
+                        <input
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder=""
+                            className="w-full rounded-lg border border-[#dce4dc] bg-transparent px-3 py-2 text-sm text-[#202620] outline-none transition focus:border-[#07883f] focus:ring-2 focus:ring-[#07883f]/10"
+                        />
 
                         <button
                             type="submit"
-                            className="h-10 w-full rounded-lg bg-[#079447] px-4 text-sm font-semibold text-white shadow-[0_3px_0_#057536] transition hover:bg-[#078b42] active:translate-y-[2px] active:shadow-none"
+                            disabled={loading}
+                            className="w-full rounded-lg bg-[#07883f] px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#07883f]/30 transition hover:bg-[#067735] focus:outline-none focus:ring-2 focus:ring-[#07883f] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
                         >
-                            আপডেট
+                            {loading ? "আপডেট হচ্ছে..." : "আপডেট"}
                         </button>
                     </form>
                 </section>

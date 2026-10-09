@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
     const [loading, setLoading] = useState(false);
+    const [socialLoading, setSocialLoading] = useState("");
     const [error, setError] = useState("");
     const router = useRouter();
 
@@ -48,6 +49,41 @@ const RegisterPage = () => {
             setError("কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।");
         } finally {
             setLoading(false);
+        }
+    };
+
+    // Google Login
+    const handleGoogleLogin = async () => {
+        setError("");
+        setSocialLoading("google");
+
+        try {
+            await authClient.signIn.social({
+                provider: "google",
+                callbackURL: "/",
+                newUserCallbackURL: "/",
+                errorCallbackURL: "/signup",
+            });
+        } catch (err) {
+            setError("Google দিয়ে লগইন করতে সমস্যা হয়েছে।");
+            setSocialLoading("");
+        }
+    };
+
+    // GitHub Login
+    const handleGithubLogin = async () => {
+        setError("");
+        setSocialLoading("github");
+
+        try {
+            await authClient.signIn.social({
+                provider: "github",
+                callbackURL: "/",
+                errorCallbackURL: "/signup",
+            });
+        } catch (err) {
+            setError("GitHub দিয়ে লগইন করতে সমস্যা হয়েছে।");
+            setSocialLoading("");
         }
     };
 
@@ -199,30 +235,34 @@ const RegisterPage = () => {
 
                     {/* Social Login */}
                     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                        {/* Google signup */}
                         <button
                             type="button"
-                            onClick={() => handleSocialLogin("google")}
-                            disabled={loading}
-                            className="flex h-10 items-center justify-center gap-2 rounded-md border border-[#dce5de] text-xs font-medium text-[#37423b] transition hover:bg-[#f7faf8]"
+                            onClick={handleGoogleLogin}
+                            disabled={loading || socialLoading !== ""}
+                            className="flex items-center justify-center gap-2 rounded-md border border-[#dce4dc] bg-white px-3 py-2.5 text-xs font-medium text-[#303832] transition hover:bg-[#f7f9f7] disabled:cursor-not-allowed disabled:opacity-60"
                         >
-                            <span className="font-bold text-blue-500">
+                            <span className="text-sm font-bold text-[#4285F4]">
                                 G
                             </span>
 
-                            Google দিয়ে চালিয়ে যান
+                            {socialLoading === "google"
+                                ? "অপেক্ষা করুন..."
+                                : "Google দিয়ে চালিয়ে যান"}
                         </button>
 
+                        {/* GitHub signup */}
                         <button
                             type="button"
-                            onClick={() => handleSocialLogin("github")}
-                            disabled={loading}
-                            className="flex h-10 items-center justify-center gap-2 rounded-md border border-[#dce5de] text-xs font-medium text-[#37423b] transition hover:bg-[#f7faf8]"
+                            onClick={handleGithubLogin}
+                            disabled={loading || socialLoading !== ""}
+                            className="flex items-center justify-center gap-2 rounded-md border border-[#dce4dc] bg-white px-3 py-2.5 text-xs font-medium text-[#303832] transition hover:bg-[#f7f9f7] disabled:cursor-not-allowed disabled:opacity-60"
                         >
-                            <span className="font-bold text-gray-800">
-                                ●
-                            </span>
+                            {/* Keep your existing GitHub SVG here */}
 
-                            GitHub দিয়ে চালিয়ে যান
+                            {socialLoading === "github"
+                                ? "অপেক্ষা করুন..."
+                                : "GitHub দিয়ে চালিয়ে যান"}
                         </button>
                     </div>
 

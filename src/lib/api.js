@@ -1,7 +1,7 @@
 
 // Get all categories
 const getCategories = async () => {
-    const response = await fetch("https://api.abcz.workers.dev/api/bazardor/categories");
+    const response = await fetch("https://api.api-store.workers.dev/api/bazardor/categories");
 
     if (!response.ok) {
         throw new Error("Failed to fetch categories");
@@ -12,7 +12,7 @@ const getCategories = async () => {
 
 // Get a single category by ID
 const getCategoryById = async (id) => {
-    const response = await fetch("https://api.abcz.workers.dev/api/bazardor/categories/chal");
+    const response = await fetch("https://api.api-store.workers.dev/api/bazardor/categories/chal");
 
     if (!response.ok) {
         throw new Error("Failed to fetch category");
@@ -23,7 +23,7 @@ const getCategoryById = async (id) => {
 
 // Get all products
 const getProducts = async () => {
-    const response = await fetch("https://api.abcz.workers.dev/api/bazardor/products");
+    const response = await fetch("https://api.api-store.workers.dev/api/bazardor/products");
 
     if (!response.ok) {
         throw new Error("Failed to fetch products");
@@ -34,7 +34,7 @@ const getProducts = async () => {
 
 // Get products by category
 const getProductsByCategory = async (category) => {
-    const response = await fetch(`https://api.abcz.workers.dev/api/bazardor/products?category=${category}`);
+    const response = await fetch(`https://api.api-store.workers.dev/api/bazardor/products?category=${category}`);
 
     if (!response.ok) {
         throw new Error("Failed to fetch products by category");
@@ -45,7 +45,7 @@ const getProductsByCategory = async (category) => {
 
 // Get a single product by ID
 const getProductById = async (id) => {
-    const response = await fetch(`https://api.abcz.workers.dev/api/bazardor/products/${id}`);
+    const response = await fetch(`https://api.api-store.workers.dev/api/bazardor/products/${id}`);
 
     if (!response.ok) {
         throw new Error("Failed to fetch product");

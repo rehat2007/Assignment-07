@@ -3,7 +3,6 @@ import Banner from "@/components/Hero"
 import Pricedown from "@/components/PriceDownPage"
 import Priceup from "@/components/PriceUpPage"
 import { getProducts } from "@/lib/api"
-import Link from 'next/link'
 
 const Home = async () => {
   const products = await getProducts()

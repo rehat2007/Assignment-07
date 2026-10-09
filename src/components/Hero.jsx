@@ -1,3 +1,4 @@
+import Link from 'next/link'
 
 const Banner = () => {
     const date = new Date().toLocaleDateString("bn-BD", { dateStyle: "full" });
@@ -25,8 +26,8 @@ const Banner = () => {
                     </p>
 
                     {/* Button */}
-                    <button className="  mt-4 rounded-md bg-[#008C3A] px-4 py-2.5 text-[11px] font-bold text-white shadow-sm transition duration-200 hover:bg-[#007A32] hover:shadow-md active:scale-95 sm:text-xs " >
-                        সব পণ্য দেখুন
+                    <button className="mt-4 rounded-md bg-[#008C3A] px-4 py-2.5 text-[11px] font-bold text-white shadow-sm transition duration-200 hover:bg-[#007A32] hover:shadow-md active:scale-95 sm:text-xs " >
+                        <Link href={"/dashboard"}>সব পণ্য দেখুন</Link>
                     </button>
                 </div>
 
