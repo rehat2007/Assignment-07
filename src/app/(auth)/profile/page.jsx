@@ -3,11 +3,26 @@
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function ProfilePage() {
 
     const { data: session, isPending } = authClient.useSession();
     const router = useRouter();
+
+    useEffect(() => {
+        if (!isPending && !session) {
+            router.replace("/signin");
+        }
+    }, [isPending, session, router]);
+
+    if (isPending || !session) {
+        return (
+            <main className="flex min-h-screen items-center justify-center bg-[#f1f6f1]">
+                <p className="text-[#697169]">প্রোফাইল লোড হচ্ছে...</p>
+            </main>
+        );
+    }
 
     const handleSignOut = async () => {
         await authClient.signOut({
@@ -40,7 +55,7 @@ export default function ProfilePage() {
                         <div className="flex items-center gap-4">
                             <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl bg-[#eef2ee]">
                                 <Image
-                                    src={session.user.image || "/default-avatar.png"}
+                                    src={session?.user?.image || "/default-avatar.png"}
                                     fill
                                     alt="Profile"
                                     className="object-cover"
