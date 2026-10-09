@@ -1,10 +1,18 @@
-import convertToBanglaNumber from "@/utils/ConvertToBanglaNumber"
+"use client"
 
-const Pricedown = ({priceDownProduct}) => {
+import convertToBanglaNumber from "@/utils/ConvertToBanglaNumber";
+import Link from 'next/link';
+import { authClient } from "@/lib/auth-client";
+
+const Pricedown = ({ priceDownProduct }) => {
+  
+  const { data: session, isPending } = authClient.useSession();
+
+
   return (
-          <section className="w-full bg-[#f3f8f4] px-4 py-5 sm:px-6 lg:px-8">
+    <section className="w-full bg-[#f3f8f4] px-4 py-5 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
-        
+
         {/* Section Header */}
         <div className="mb-3 flex items-center gap-1.5">
           <span className="text-[10px] text-red-500">▲</span>
@@ -17,7 +25,12 @@ const Pricedown = ({priceDownProduct}) => {
         {/* Cards */}
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {priceDownProduct.map((product) => (
-            <div
+            <Link
+              href={
+                session
+                  ? `/item/${product.category}/${product.id}`
+                  : "/signin"
+              }
               key={product.id}
               className="
                 group
@@ -36,10 +49,10 @@ const Pricedown = ({priceDownProduct}) => {
             >
               {/* Top part */}
               <div className="flex items-start justify-between gap-2">
-                
+
                 {/* Product information */}
                 <div className="flex min-w-0 items-center gap-2">
-                  
+
                   {/* Image */}
                   <div
                     className="
@@ -75,7 +88,7 @@ const Pricedown = ({priceDownProduct}) => {
 
               {/* Bottom part */}
               <div className="mt-2 flex items-end justify-between">
-                
+
                 {/* Price */}
                 <div>
                   <p className="text-[7px] text-gray-500 sm:text-[8px]">
@@ -104,10 +117,10 @@ const Pricedown = ({priceDownProduct}) => {
                   "
                 >
                   <span className="text-[6px]">▼</span>
-                 {convertToBanglaNumber(product.change.pct)}
+                  {convertToBanglaNumber(product.change.pct)}
                 </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

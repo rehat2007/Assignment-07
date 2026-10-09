@@ -1,6 +1,13 @@
-import convertToBanglaNumber from "@/utils/ConvertToBanglaNumber"
+"use client"
+
+import convertToBanglaNumber from "@/utils/ConvertToBanglaNumber";
+import Link from 'next/link';
+import { authClient } from "@/lib/auth-client";
 
 const Allproducts = ({ allProduct }) => {
+
+  const { data: session, isPending } = authClient.useSession();
+
   return (
     <section className="w-full bg-[#f3f8f4] px-4 py-5 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
@@ -18,7 +25,12 @@ const Allproducts = ({ allProduct }) => {
         {/* Cards */}
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {allProduct.map((product) => (
-            <div
+            <Link
+              href={
+                session
+                  ? `/item/${product.category}/${product.id}`
+                  : "/signin"
+              }
               key={product.id}
               className="
                 group
@@ -110,7 +122,7 @@ const Allproducts = ({ allProduct }) => {
                   {product.change.pct}
                 </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

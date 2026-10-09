@@ -2,9 +2,10 @@
 
 import convertToBanglaNumber from "@/utils/ConvertToBanglaNumber";
 import { useState } from "react";
+import Link from 'next/link';
 
 const Categorypage = ({ category }) => {
-console.log(category);
+console.log('this is data :',category);
 
 const [sortOrder, setSortOrder] = useState("default");
 
@@ -62,7 +63,8 @@ return (
             {/* Rice Cards */}
             <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {sortedPrices.map((rice) => (
-                    <article
+                    <Link
+                     href={`/item/${rice.category}/${rice.id}`}
                         key={rice.id}
                         className="rounded-2xl border border-[#DFE7DF] bg-[#FAFCFA] p-4 transition duration-200  hover:border-green-500 hover:shadow-sm sm:p-4"
                     >
@@ -112,7 +114,7 @@ return (
                                 {convertToBanglaNumber(Math.abs(rice.change.pct))}%
                             </span>
                         </div>
-                    </article>
+                    </Link>
                 ))}
             </section>
         </div>
