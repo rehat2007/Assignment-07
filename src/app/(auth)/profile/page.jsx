@@ -19,13 +19,15 @@ export default function ProfilePage() {
         }
     }, [isPending, session, router]);
 
-    if (isPending || !session) {
-        return (
-            <main className="flex min-h-screen items-center justify-center bg-[#f1f6f1]">
-                <p className="text-[#697169]">প্রোফাইল লোড হচ্ছে...</p>
-            </main>
-        );
-    }
+if (isPending || !session?.user) {
+    return (
+        <main className="flex min-h-screen items-center justify-center bg-[#f1f6f1]">
+            <p className="text-[#697169]">
+                প্রোফাইল লোড হচ্ছে...
+            </p>
+        </main>
+    );
+}
 
     const handleSignOut = async () => {
         await authClient.signOut({
